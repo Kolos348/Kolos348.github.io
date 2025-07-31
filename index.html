@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gateway</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+      text-align: center;
+      padding: 40px;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .folder-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      transition: all 0.4s ease;
+    }
+
+    .folder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      position: relative;
+    }
+
+    .folder img {
+      width: 100px;
+    }
+
+    .subpages {
+      margin-top: 20px;
+      display: none;
+      text-align: left;
+    }
+
+    .subpages a {
+      display: block;
+      padding: 8px 12px;
+      margin: 5px 0;
+      background-color: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      color: #0077cc;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .subpages a:hover {
+      background-color: #e0eaff;
+    }
+
+    .folder.centered {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(1.2);
+      z-index: 10;
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📁 Witaj wybierz podstronę</h1>
+
+  <div id="folders" class="folder-container">
+    <div class="folder" onclick="toggleFolder(this, 'projects-sub')">
+      <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" alt="Projects" />
+      <div>Projects</div>
+      <div id="projects-sub" class="subpages">
+        <a href="ToDoList/index.html">To-do List</a>
+        <a href="projects/cv.html">Resume</a>
+      </div>
+    </div>
+
+    <div class="folder" onclick="toggleFolder(this, 'games-sub')">
+      <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" alt="Games" />
+      <div>Games</div>
+      <div id="games-sub" class="subpages">
+        <a href="games/shooter.html">Shooter</a>
+        <a href="games/puzzle.html">Puzzle</a>
+      </div>
+    </div>
+
+    <div class="folder" onclick="toggleFolder(this, 'other-sub')">
+      <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" alt="Other" />
+      <div>Other</div>
+      <div id="other-sub" class="subpages">
+        <a href="other/notes.html">Notes</a>
+        <a href="other/about.html">About Me</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let opened = false;
+    let currentFolder = null;
+
+    function toggleFolder(folderEl, subId) {
+      const allFolders = document.querySelectorAll('.folder');
+      const allSubpages = document.querySelectorAll('.subpages');
+
+      if (!opened) {
+        allFolders.forEach(f => {
+          if (f !== folderEl) {
+            f.classList.add('hidden');
+          }
+        });
+
+        folderEl.classList.add('centered');
+        document.getElementById(subId).style.display = 'block';
+        currentFolder = folderEl;
+        opened = true;
+      } else {
+        allFolders.forEach(f => f.classList.remove('hidden'));
+        if (currentFolder) currentFolder.classList.remove('centered');
+        allSubpages.forEach(s => s.style.display = 'none');
+        opened = false;
+      }
+    }
+  </script>
+
+</body>
+</html>
+
